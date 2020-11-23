@@ -42,13 +42,13 @@ skbuild.setup(
     cmake_args=[
         "-DECL_VERSION=" + version,
         # "-DBUILD_APPLICATIONS=ON",
-        "-DENABLE_PYTHON=ON",
-        "-DBUILD_SHARED_LIBS"
-        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
-        "-DCMAKE_BUILD_TYPE=Release",
-        # "-DCMAKE_INSTALL_BINDIR=python/ecl/.bin",
-        # "-DCMAKE_INSTALL_LIBDIR=python/ecl/.libs",
-        # "-DCMAKE_INSTALL_INCLUDEDIR=python/ecl/.include",
+        # "-DENABLE_PYTHON=ON",
+        # "-DBUILD_SHARED_LIBS=ON",
+        # "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        # "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_INSTALL_BINDIR=python/ecl/.bin",
+        "-DCMAKE_INSTALL_LIBDIR=python/ecl/.libs",
+        "-DCMAKE_INSTALL_INCLUDEDIR=python/ecl/.include",
         # we can safely pass OSX_DEPLOYMENT_TARGET as it's ignored on
         # everything not OS X. We depend on C++11, which makes our minimum
         # supported OS X release 10.9
