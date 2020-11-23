@@ -53,7 +53,8 @@ jobs:
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         md cmake-build
-        call cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
+        cd cmake-build
+        call cmake -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..
         call cmake --build cmake-build
       if: matrix.os == 'windows-2016'
 
