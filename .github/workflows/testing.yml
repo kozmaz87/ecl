@@ -26,11 +26,15 @@ jobs:
         python-version: ${{ matrix.python }}
 
     - name: Check build args
+      shell: cmd
       run: |
         where python
         where cmake
         where cl
-      if: matrix.os != 'ubuntu-16.04'
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        where cl
+        where cmake
+      if: matrix.os == 'windows-2016'
 
     - name: Build ecl
       run: |
