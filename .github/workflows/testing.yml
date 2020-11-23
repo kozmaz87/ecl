@@ -9,7 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'windows-2016']
+        os: ['ubuntu-16.04', 'windows-2016']
+        python: ['3.7']
 
     runs-on: ${{ matrix.os }}
 
@@ -19,10 +20,22 @@ jobs:
         # required for `git describe --tags` to work
         fetch-depth: 0
 
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+
+    - name: Check build args
+      run: |
+        where python
+        where cmake
+        where cl
+      if: matrix.os != 'ubuntu-16.04'
+
     - name: Build ecl
       run: |
         mkdir cmake-build
-        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
         cmake --build cmake-build
 
     - name: Run tests
@@ -40,7 +53,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'windows-2016']
+        os: ['ubuntu-16.04', 'windows-2016']
         python: ['3.7']
 
     runs-on: ${{ matrix.os }}
@@ -56,7 +69,7 @@ jobs:
       with:
         entrypoint: /github/workspace/ci/github/build_linux_wheel.sh
         args: ${{ matrix.python }}
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-16.04'
 
     - name: Setup Python
       uses: actions/setup-python@v2
@@ -65,7 +78,7 @@ jobs:
 
     - name: Build macOS/Windows Wheel
       run: pip wheel . --no-deps -w dist
-      if: matrix.os != 'ubuntu-latest'
+      if: matrix.os != 'ubuntu-16.04'
 
     - name: Upload wheel as artifact
       uses: actions/upload-artifact@v2
@@ -73,21 +86,8 @@ jobs:
         name: ${{ matrix.os }} Python ${{ matrix.python }} wheel
         path: dist/*
 
-    - name: Build `libecl` migration package
-      run: |
-        pip install -U pip setuptools wheel setuptools_scm
-        python ci/github/setup.py bdist_wheel --dist-dir=dist-migration
-      if: matrix.os == 'ubuntu-latest' && matrix.python == '3.6'
-
-    - name: Upload `libecl` migration wheel as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: Python libecl to ecl wheel
-        path: dist-migration/*
-      if: matrix.os == 'ubuntu-latest' && matrix.python == '3.6'
-
     - name: Install ecl
-      run: pip install dist/*
+      run: pip install --find-links dist ecl
 
     - name: Run Python tests
       run: |
@@ -115,7 +115,7 @@ jobs:
 
 #  publish:
 #    name: Publish to PyPI
-#    runs-on: ubuntu-latest
+#    runs-on: ubuntu-16.04
 #    needs: [build-test-wheel]
 #
 #    # If this is a tagged release
