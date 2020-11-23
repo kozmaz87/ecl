@@ -37,6 +37,16 @@ jobs:
         mkdir cmake-build
         cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
         cmake --build cmake-build
+      if: matrix.os == 'ubuntu-16.04'
+
+    - name: Build ecl
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        md cmake-build
+        call cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
+        call cmake --build cmake-build
+      if: matrix.os == 'windows-2016'
 
     - name: Run tests
       run: |
@@ -87,7 +97,9 @@ jobs:
         path: dist/*
 
     - name: Install ecl
-      run: pip install --find-links dist ecl
+      run: |
+        pip install wheel
+        pip install --find-links dist ecl
 
     - name: Run Python tests
       run: |
