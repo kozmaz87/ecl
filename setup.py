@@ -6,6 +6,9 @@ from setuptools_scm import get_version
 
 version = get_version(relative_to=__file__, write_to="python/ecl/version.py")
 
+# PIP can not handle the dev versions here so we override here manually
+version = "2.9.3"
+
 
 with open("README.md") as f:
     long_description = f.read()
