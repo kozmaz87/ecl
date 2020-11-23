@@ -33,12 +33,13 @@ jobs:
     - name: Check build args
       shell: cmd
       run: |
-        where python
-        where cmake
         where cl
+        where cmake
+        where msbuild
         call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         where cl
         where cmake
+        where msbuild
       if: matrix.os == 'windows-2016'
 
     - name: Build ecl
@@ -55,6 +56,7 @@ jobs:
         md cmake-build
         cd cmake-build
         call cmake -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..
+        cd ..
         call cmake --build cmake-build
       if: matrix.os == 'windows-2016'
 
