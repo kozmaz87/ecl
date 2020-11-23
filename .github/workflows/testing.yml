@@ -20,6 +20,11 @@ jobs:
         # required for `git describe --tags` to work
         fetch-depth: 0
 
+    - name: Add things to path
+      run: |
+        echo "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      if: matrix.os == 'windows-2016'
+
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
