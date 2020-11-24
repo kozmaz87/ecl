@@ -42,23 +42,23 @@ jobs:
         where msbuild
       if: matrix.os == 'windows-2016'
 
-#    - name: Build ecl
-#      run: |
-#        mkdir cmake-build
-#        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
-#        cmake --build cmake-build
-#      if: matrix.os == 'ubuntu-16.04'
-
     - name: Build ecl
-      shell: cmd
       run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        md cmake-build
-        cd cmake-build
-        call cmake -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..
-        cd ..
-        call cmake --build cmake-build
-      if: matrix.os == 'windows-2016'
+        mkdir cmake-build
+        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
+        cmake --build cmake-build
+      if: matrix.os == 'ubuntu-16.04'
+
+#    - name: Build ecl
+#      shell: cmd
+#      run: |
+#        call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+#        md cmake-build
+#        cd cmake-build
+#        call cmake -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..
+#        cd ..
+#        call cmake --build cmake-build
+#      if: matrix.os == 'windows-2016'
 
     - name: Run tests
       run: |
@@ -137,6 +137,7 @@ jobs:
 
         # Run tests
         python -m pytest python/tests
+      if: matrix.os == 'ubuntu-16.04'
 
 #  publish:
 #    name: Publish to PyPI
