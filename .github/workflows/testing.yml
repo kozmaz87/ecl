@@ -67,7 +67,7 @@ jobs:
       env:
         ECL_SKIP_SIGNAL: absolutely
         ERT_SHOW_BACKTRACE: yes please!
-      if: matrix.os == 'windows-2016'
+      if: matrix.os == 'ubuntu-16.04'
 
 
   build-test-wheel:
