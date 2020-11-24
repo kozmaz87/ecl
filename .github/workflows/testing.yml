@@ -42,12 +42,12 @@ jobs:
         where msbuild
       if: matrix.os == 'windows-2016'
 
-    - name: Build ecl
-      run: |
-        mkdir cmake-build
-        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
-        cmake --build cmake-build
-      if: matrix.os == 'ubuntu-16.04'
+#    - name: Build ecl
+#      run: |
+#        mkdir cmake-build
+#        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
+#        cmake --build cmake-build
+#      if: matrix.os == 'ubuntu-16.04'
 
     - name: Build ecl
       shell: cmd
@@ -67,6 +67,7 @@ jobs:
       env:
         ECL_SKIP_SIGNAL: absolutely
         ERT_SHOW_BACKTRACE: yes please!
+      if: matrix.os == 'windows-2016'
 
 
   build-test-wheel:
