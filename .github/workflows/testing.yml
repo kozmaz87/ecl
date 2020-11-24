@@ -45,7 +45,7 @@ jobs:
     - name: Build ecl
       run: |
         mkdir cmake-build
-        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
+        cmake -S . -B cmake-build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo
         cmake --build cmake-build
       if: matrix.os == 'ubuntu-16.04'
 
@@ -60,14 +60,14 @@ jobs:
 #        call cmake --build cmake-build
 #      if: matrix.os == 'windows-2016'
 
-    - name: Run tests
-      run: |
-        cd cmake-build
-        ctest --output-on-failure
-      env:
-        ECL_SKIP_SIGNAL: absolutely
-        ERT_SHOW_BACKTRACE: yes please!
-      if: matrix.os == 'ubuntu-16.04'
+#    - name: Run tests
+#      run: |
+#        cd cmake-build
+#        ctest --output-on-failure
+#      env:
+#        ECL_SKIP_SIGNAL: absolutely
+#        ERT_SHOW_BACKTRACE: yes please!
+#      if: matrix.os == 'windows-2016'
 
 
   build-test-wheel:
